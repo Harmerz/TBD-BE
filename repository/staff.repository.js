@@ -2,48 +2,48 @@ const { connect } = require('../config/db.config');
 const logger = require('../logger/api.logger');
 
 
-class TaskRepository {
+class staffRepository {
 
     db = {};
 
     constructor() {
         this.db = connect();
         // For Development
-        this.db.sequelize.sync({ force: true }).then(() => {
-            console.log("Drop and re-sync db.");
-        });
+        // this.db.sequelize.sync({ force: true }).then(() => {
+        //     console.log("Drop and re-sync db.");
+        // });
     }
 
-    async getTasks() {
+    async getstaff() {
         
         try {
-            const tasks = await this.db.tasks.findAll();
-            console.log('tasks:::', tasks);
-            return tasks;
+            const staff = await this.db.staff.findAll();
+            console.log('staff:::', staff);
+            return staff;
         } catch (err) {
             console.log(err);
             return [];
         }
     }
 
-    async createTask(task) {
+    async createstaff(staff) {
         let data = {};
         try {
-            task.createdate = new Date().toISOString();
-            data = await this.db.tasks.create(task);
+            staff.createdate = new Date().toISOString();
+            data = await this.db.staff.create(staff);
         } catch(err) {
             logger.error('Error::' + err);
         }
         return data;
     }
 
-    async updateTask(task) {
+    async updatestaff(staff) {
         let data = {};
         try {
-            task.updateddate = new Date().toISOString();
-            data = await this.db.tasks.update({...task}, {
+            staff.updateddate = new Date().toISOString();
+            data = await this.db.staff.update({...staff}, {
                 where: {
-                    id: task.id
+                    id: staff.id
                 }
             });
         } catch(err) {
@@ -52,12 +52,12 @@ class TaskRepository {
         return data;
     }
 
-    async deleteTask(taskId) {
+    async deletestaff(staffId) {
         let data = {};
         try {
-            data = await this.db.tasks.destroy({
+            data = await this.db.staff.destroy({
                 where: {
-                    id: taskId
+                    id: staffId
                 }
             });
         } catch(err) {
@@ -69,4 +69,4 @@ class TaskRepository {
 
 }
 
-module.exports = new TaskRepository();
+module.exports = new staffRepository();

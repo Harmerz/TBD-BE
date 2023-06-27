@@ -24,7 +24,14 @@ const connect = () => {
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
-    db.tasks = require("../model/task.model")(sequelize, DataTypes, Model);
+    db.user = require("../model/user.model")(sequelize, DataTypes, Model);
+    db.address = require("../model/address.model")(sequelize, DataTypes, Model);
+    db.store = require("../model/store.model")(sequelize, DataTypes, Model);
+    db.book = require("../model/book.model")(sequelize, DataTypes, Model);
+    db.inventory = require("../model/inventory.model")(sequelize, DataTypes, Model);
+    db.payment = require("../model/payment.model")(sequelize, DataTypes, Model);
+    db.staff = require("../model/staff.model")(sequelize, DataTypes, Model);
+    db.writers = require("../model/writers.model")(sequelize, DataTypes, Model);
 
     return db;
 
