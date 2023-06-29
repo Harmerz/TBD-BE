@@ -12,6 +12,7 @@ const connect = () => {
     host: hostName,
     dialect: dialect,
     operatorsAliases: false,
+    dialectModule: require("pg"),
     pool: {
       max: 10,
       min: 0,
