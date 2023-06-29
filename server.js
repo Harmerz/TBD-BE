@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://tbd-fe-puce.vercel.app", "http://tbd-fe-puce.vercel.app"],
   credentials: true,
   optionSuccessStatus: 204,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
