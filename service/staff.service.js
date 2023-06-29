@@ -1,25 +1,23 @@
-const staffRepository  = require('../repository/staff.repository');
+const staffRepository = require("../repository/staff.repository");
 
 class staffervice {
+  constructor() {}
 
-    constructor() {}
+  async getstaff() {
+    return await staffRepository.getstaff();
+  }
 
-    async getstaff() {
-        return await staffRepository.getstaff();
-    }
+  async createstaff(staff) {
+    return await staffRepository.createstaff(staff);
+  }
 
-    async createstaff(staff) {
-        return await staffRepository.createstaff(staff);
-    }
+  async updatestaff(staff) {
+    return await staffRepository.updatestaff(staff);
+  }
 
-    async updatestaff(staff) {
-        return await staffRepository.updatestaff(staff);
-    }
-
-    async deletestaff(staffId) {
-        return await staffRepository.deletestaff(staffId);
-    }
-
+  async deletestaff(staffId) {
+    return await staffRepository.deletestaff(staffId);
+  }
 }
 
 module.exports = new staffervice();

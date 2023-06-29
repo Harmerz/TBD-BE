@@ -1,90 +1,95 @@
-const { json } = require('sequelize');
-const { connect } = require('../config/db.config');
-const logger = require('../logger/api.logger');
-
+const { json } = require("sequelize");
+const { connect } = require("../config/db.config");
+const logger = require("../logger/api.logger");
 
 class userRepository {
+  db = {};
 
-    db = {};
+  constructor() {
+    this.db = connect();
+    // For Development
+    // this.db.sequelize.sync({ force: false }).then(() => {
+    //     console.log("Drop and re-sync db.");
+    // });
+  }
 
-    constructor() {
-        this.db = connect();
-        // For Development
-        // this.db.sequelize.sync({ force: true }).then(() => {
-        //     console.log("Drop and re-sync db.");
-        // });
+  async getuser() {
+    try {
+      const user = await this.db.user.findAll();
+      console.log("user:::", user);
+      return user;
+    } catch (err) {
+      console.log(err);
+      return [];
     }
+  }
 
-    async getuser() {
-        
-        try {
-            const user = await this.db.user.findAll();
-            console.log('user:::', user);
-            return user;
-        } catch (err) {
-            console.log(err);
-            return [];
+  async loginUser(user) {
+      let data = {};
+        user = JSON.parse(user);    
+      console.log("user:::", user.username);
+    try {
+      data = await this.db.user.findOne({
+        where: {
+          username: user.username,
+          password: user.password,
+        },
+      });
+        if(data){
+            return data;
+        } else {
+            return "User not found";
         }
+    } catch (err) {
+      console.log(err);
+      return [];
     }
+    return json(data);
+  }
 
-    async loginUser(user) {
-        let data = {};
-        try {
-            data = await this.db.user.findOne({
-                where: {
-                    username: user.username,
-                    password: user.password
-                }
-            });
-        } catch (err) {
-            console.log(err);
-            return [];
+  async createuser(user) {
+    let data = {};
+    user = JSON.parse(user);
+    try {
+      data = await this.db.user.create(user);
+    } catch (err) {
+      logger.error("Error::" + err);
+    }
+    return data;
+  }
+
+  async updateuser(user) {
+    let data = {};
+    try {
+      user.updateddate = new Date().toISOString();
+      data = await this.db.user.update(
+        { ...user },
+        {
+          where: {
+            id: user.id,
+          },
         }
-        return json(data);
+      );
+    } catch (err) {
+      logger.error("Error::" + err);
     }
+    return data;
+  }
 
-
-    async createuser(user) {
-        let data = {};
-        try {
-            user.createdate = new Date().toISOString();
-            data = await this.db.user.create(user);
-        } catch(err) {
-            logger.error('Error::' + err);
-        }
-        return data;
+  async deleteuser(userId) {
+    let data = {};
+    try {
+      data = await this.db.user.destroy({
+        where: {
+          id: userId,
+        },
+      });
+    } catch (err) {
+      logger.error("Error::" + err);
     }
-
-    async updateuser(user) {
-        let data = {};
-        try {
-            user.updateddate = new Date().toISOString();
-            data = await this.db.user.update({...user}, {
-                where: {
-                    id: user.id
-                }
-            });
-        } catch(err) {
-            logger.error('Error::' + err);
-        }
-        return data;
-    }
-
-    async deleteuser(userId) {
-        let data = {};
-        try {
-            data = await this.db.user.destroy({
-                where: {
-                    id: userId
-                }
-            });
-        } catch(err) {
-            logger.error('Error::' + err);
-        }
-        return data;
-        return {status: `${data.deletedCount > 0 ? true : false}`};
-    }
-
+    return data;
+    return { status: `${data.deletedCount > 0 ? true : false}` };
+  }
 }
 
 module.exports = new userRepository();

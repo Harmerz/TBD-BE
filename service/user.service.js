@@ -1,25 +1,27 @@
-const userRepository  = require('../repository/user.repository');
+const userRepository = require("../repository/user.repository");
 
 class userervice {
+  constructor() {}
 
-    constructor() {}
+  async getuser() {
+    return await userRepository.getuser();
+  }
 
-    async getuser() {
-        return await userRepository.getuser();
-    }
+  async loginUser(user) {
+    return await userRepository.loginUser(user);
+  }
 
-    async createuser(user) {
-        return await userRepository.createuser(user);
-    }
+  async createuser(user) {
+    return await userRepository.createuser(user);
+  }
 
-    async updateuser(user) {
-        return await userRepository.updateuser(user);
-    }
+  async updateuser(user) {
+    return await userRepository.updateuser(user);
+  }
 
-    async deleteuser(userId) {
-        return await userRepository.deleteuser(userId);
-    }
-
+  async deleteuser(userId) {
+    return await userRepository.deleteuser(userId);
+  }
 }
 
 module.exports = new userervice();

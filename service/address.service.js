@@ -1,25 +1,23 @@
-const userRepository  = require('../repository/user.repository');
+const addressRepository = require("../repository/address.repository");
 
-class userervice {
+class addresservice {
+  constructor() {}
 
-    constructor() {}
+  async getaddress() {
+    return await addressRepository.getaddress();
+  }
 
-    async getuser() {
-        return await userRepository.getuser();
-    }
+  async createaddress(address) {
+    return await addressRepository.createaddress(address);
+  }
 
-    async createuser(user) {
-        return await userRepository.createuser(user);
-    }
+  async updateaddress(address) {
+    return await addressRepository.updateaddress(address);
+  }
 
-    async updateuser(user) {
-        return await userRepository.updateuser(user);
-    }
-
-    async deleteuser(userId) {
-        return await userRepository.deleteuser(userId);
-    }
-
+  async deleteaddress(addressId) {
+    return await addressRepository.deleteaddress(addressId);
+  }
 }
 
-module.exports = new userervice();
+module.exports = new addresservice();
